@@ -76,9 +76,20 @@ class VeerState extends State {
 
 class TurnState extends State {
     execute(scene, player) {
+        // scene.speed = 1.5
+        scene.player.body.setCollideWorldBounds(false)
+
         const { left, right, up, down, } = scene.keys
 
+        if (scene.player.body.checkWorldBounds()) {
+            scene.tip = "Stay on course!\nWatch out for\nthe trees!"
+            this.stateMachine.transition('fall')
+            return
+        }
+
         if (!(down.isDown)) {
+            // scene.speed = 2
+            scene.player.body.setCollideWorldBounds(true)
             this.stateMachine.transition('veer')
             return
         }
@@ -93,11 +104,11 @@ class TurnState extends State {
         }
 
         if (!(left.isDown || right.isDown) && down.isDown) {
+            // scene.speed = 2
             this.stateMachine.transition('twist')
             return
         }
     }
-
 }
 
 class TwistState extends State {
@@ -105,6 +116,12 @@ class TwistState extends State {
         const { left, right, up, down, } = scene.keys
 
         player.setVelocityX(player.direction * (player.turnVelocity - player.veerVelocity))
+        
+        if (scene.player.body.checkWorldBounds()) {
+            scene.tip = 'Tip: you lost\nbalance! For a\nclean turn,\nrelease ↓ before\nreleasing ← or →'
+            this.stateMachine.transition('fall')
+            return
+        }
         
         if (player.direction == -1) {
             if (Phaser.Input.Keyboard.JustDown(right) && Phaser.Input.Keyboard.JustDown(down)) {
@@ -124,6 +141,7 @@ class TwistState extends State {
                 return
             }
             else if (Phaser.Input.Keyboard.JustDown(left) || Phaser.Input.Keyboard.JustDown(right)) {
+                scene.tip = 'Tip: Shift your\nweight before\nyou twist. Hold\n← or →, then ↓,\nin that order.'
                 this.stateMachine.transition('fall')
             }
         }
@@ -136,9 +154,9 @@ class FallState extends State {
 
         scene.speed = 0
             
-        scene.add.text(game.config.width/2, game.config.height/4, `GAME OVER!\nScore: ${scene.score}`, scene.uiConfig).setOrigin(0.5).setLetterSpacing(0.8)
-        scene.add.text(game.config.width/2, game.config.height/2, scene.tip, scene.uiConfig).setOrigin(0.5).setLetterSpacing(0.8)
-        scene.add.text(game.config.width/2, game.config.height*3/4, 'Press ↑ to go again!', scene.uiConfig).setOrigin(0.5).setLetterSpacing(0.8)
+        scene.add.text(game.config.width/2, game.config.height/8, `GAME OVER!\nScore: ${scene.score}`, scene.uiConfig).setOrigin(0.5).setLetterSpacing(0.8)
+        scene.add.text(game.config.width/2, game.config.height*3/8, scene.tip, scene.uiConfig).setOrigin(0.5).setLetterSpacing(0.8)
+        scene.add.text(game.config.width/2, game.config.height*5/8, 'Press ↑ to\ngo again!', scene.uiConfig).setOrigin(0.5).setLetterSpacing(0.8)
     }
 }
 

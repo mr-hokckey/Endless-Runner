@@ -1,5 +1,5 @@
 // Leo Assimes
-// Endl ASCII er
+// Endless SCIIer
 // Time spent: ~20 hours
 // 
 // Creative tilt

@@ -15,6 +15,10 @@
 // - colorhexa.com/color-names - for random HEX colors
 // - 
 
+// Note: My weekend is extremely chaotic and I'm being forced to submit this unfinished. I didn't get time to include music
+// and there are definitely many places with bad practice in writing code. I am aware of everything. I apologize in advance.
+// But I believe I'll still get a decent grade and I am perfectly fine with that.
+
 'use strict'
 
 let config = {

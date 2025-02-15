@@ -6,6 +6,7 @@ class Menu extends Phaser.Scene {
     preload() {
         this.load.image('ski-hill', './assets/skiing.png')
         this.load.image('title', './assets/title.png')
+        this.load.image('rock', './assets/rock.png')
 
         this.load.spritesheet('player', './assets/player.png', {
             frameWidth: 40,
@@ -23,7 +24,7 @@ class Menu extends Phaser.Scene {
             color: '#000000',
             fontStyle: 'Bold'
         }
-        this.add.text(game.config.width/2, game.config.height*3/4, 'Press ↑ to play!', this.uiConfig).setOrigin(0.5).setLetterSpacing(0.8)
+        this.add.text(game.config.width/2, game.config.height*3/4, 'Press ← or → to lean\na direction, press ↓ to\ntwist and get a sharper turn.\nPress ↑ to play!', this.uiConfig).setOrigin(0.5).setLetterSpacing(0.8)
 
         this.uiConfig = {
             fontSize: '32px',
